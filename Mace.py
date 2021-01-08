@@ -1,56 +1,93 @@
-file = open("laberinto1.txt")
-lines = file.readlines()
+xInicial = 1
+yInicial = 1
+xFinal = 3
+yFinal = 8
+xActual = xInicial
+yActual = yInicial
+xAnterior = xInicial
+yAnterior = yInicial
+bifurcaciones = []
+caminoSeguido = []
+caminosExitosos = []
+todoExplorado = False
+finalEncontrado = False
 mace = []
-mace2 = []
-row = []
-for line in lines:
-    for char in line:
-        if char in "10":
-            row.append(int(char))
-    mace.append(row)
-    mace2.append(row)
+
+
+# mace2 = []
+
+def cargar_laberinto():
+    global mace
+    file = open("laberinto2.txt")
+    lines = file.readlines()
+    mace = []
+    mace2 = []
     row = []
+    for line in lines:
+        for char in line:
+            if char in "10":
+                row.append(int(char))
+        mace.append(row)
+        # mace2.append(row)
+        row = []
 
 
-def avanzar(mace, current_x, current_y, last_x, last_y):
-    if mace[current_x + 1][current_y + 1] == 0:  # Abajo- Derecha
-        return current_x + 1, current_y + 1, current_x, current_y
-    elif mace[current_x][current_y + 1] == 0:  # Derecha
-        return current_x, current_y + 1, current_x, current_y
-    elif mace[current_x - 1][current_y + 1] == 0:  # Arriba-Derecha
-        return current_x - 1, current_y + 1, current_x, current_y
-    elif mace[current_x - 1][current_y] == 0:  # Arriba
-        return current_x - 1, current_y, current_x, current_y
-    elif mace[current_x - 1][current_y - 1] == 0:  # Arriba- Izquierda
-        return current_x - 1, current_y - 1, current_x, current_y
-    elif mace[current_x][current_y - 1] == 0:  # Izquierda
-        return current_x, current_y - 1, current_x, current_y
-    elif mace[current_x + 1][current_y - 1] == 0:  # Abajo- Izquierda
-        return current_x + 1, current_y - 1, current_x, current_y
-    elif mace[current_x + 1][current_y] == 0:  # Abajo
-        return current_x + 1, current_y, current_x, current_y
-    return current_x, current_y, last_x, last_y
-def is_bifurcacion(mace, current_x, current_y):
-    print(mace[current_x + 1][current_y + 1] + mace[current_x][current_y + 1] + mace[current_x - 1][current_y + 1] + \
-           mace[current_x - 1][current_y] + mace[current_x - 1][current_y - 1]
-    + mace[current_x][current_y - 1] + mace[current_x + 1][current_y - 1] + mace[current_x + 1][current_y])
-    return mace[current_x + 1][current_y + 1] + mace[current_x][current_y + 1] + mace[current_x - 1][current_y + 1] + \
-           mace[current_x - 1][current_y] + mace[current_x - 1][current_y - 1]
-    + mace[current_x][current_y - 1] + mace[current_x + 1][current_y - 1] + mace[current_x + 1][current_y] < 6
+def avanzar():
+    global xActual, yActual, xAnterior, yAnterior
+    # hacia derecha
+    if coordenadas_avance(0, 1):
+        yAnterior = yActual
+        yActual += 1
+    # hacia abajo
+    elif coordenadas_avance(1, 0):
+        xAnterior = xActual
+        xActual += 1
+    # hacia izquierda
+    elif coordenadas_avance(0, -1):
+        yAnterior = yActual
+        yActual -= 1
+    # hacia arriba
+    elif coordenadas_avance(-1, 0):
+        xAnterior = xActual
+        xActual -= 1
 
 
-current_x, current_y, last_x, last_y = 1, 1, 1, 1
-bifurcaciones_current = []
-bifurcaciones_last = []
-while True:
-    print(current_x, current_y)
-    if is_bifurcacion(mace2, current_x, current_y):
-        bifurcaciones_current.append((current_x, current_y))
-        bifurcaciones_last.append((last_x, last_y))
-    current_x, current_y, last_x, last_y = avanzar(mace2, current_x, current_y, last_x, last_y)
-    if (current_x, current_y) in bifurcaciones_current:
-        current_x, current_y = bifurcaciones_current.pop()
-        last_x, last_y = bifurcaciones_last.pop()
-        mace2[avanzar(mace2,current_x,current_y,last_x,last_y)[0]][avanzar(mace2,current_x,current_y,last_x,last_y)[1]] = 1
-    #for i in range(9):
-        #print(i, mace2[i][:])
+def es_bifurcacion():
+    return suma_opciones() < 2
+
+
+def camino_cerrado():
+    return suma_opciones() == 3
+
+
+def suma_opciones():
+    global xActual, yActual, mace
+    x = xActual
+    y = yActual
+    return mace[x][y + 1] + mace[x - 1][y] + mace[x][y - 1] + mace[x + 1][y]
+
+
+def coordenadas_avance(x, y):
+    global mace
+    global xActual
+    global yActual
+    if mace[xActual + x][yActual + y] == 0:
+        return True
+    return False
+
+
+def ensayo_global():
+    global xInicial
+    xInicial = 5
+
+
+# A PARTIR DE AQUÍ EJECUCIÓN DEL PROGRAMA
+cargar_laberinto()
+
+while not finalEncontrado:
+    print("Coordenada X actual: " + str(xActual) + ".Coordenada Y actual: " + str(yActual))
+    avanzar()
+    if (xActual == xFinal and yActual == yFinal):
+        finalEncontrado = True
+        print("Coordenada X actual: " + str(xActual) + ".Coordenada Y actual: " + str(yActual))
+        print("final encontrado")
