@@ -1,7 +1,7 @@
-xInicial = 9
+xInicial = 1
 yInicial = 1
-xFinal = 3  # 9
-yFinal = 8  # 3
+xFinal = 6  # 9
+yFinal = 12  # 3
 xActual = xInicial
 yActual = yInicial
 xAnterior = xInicial
@@ -11,7 +11,7 @@ caminoSeguido = []
 bifurcaciones = []
 caminosExitosos = []
 todoExplorado = False
-finalEncontrado = False
+
 maze = []
 
 
@@ -93,7 +93,7 @@ def desapilar_por_camino_ciego():
             xActual = xInicial
             yActual = yInicial
             xAnterior = xInicial
-            yAnterior = yAnterior
+            yAnterior = yInicial
             sellar_camino_ciego()
             if suma_opciones() == 4:
                 todoExplorado = True
@@ -130,16 +130,24 @@ while not todoExplorado:
     print(" X actual: " + str(xActual) + ". Y actual: " + str(yActual))
     print(" X anterior: " + str(xAnterior) + ". Y anterior: " + str(yAnterior))
     avanzar()
-    caminoSeguido.append((xActual, yActual, es_bifurcacion(), xAnterior, yAnterior))
+
+    """if (xActual)
+        
+    else:
+        xActual, yActual = caminoSeguido[-1][0], caminoSeguido[-1][1]"""
+
     if xActual == xFinal and yActual == yFinal:
         caminosExitosos.append(str(caminoSeguido))
         desapilar_por_camino_ciego()
         print("X actual: " + str(xActual) + ".Y actual: " + str(yActual))
         print("final encontrado")
-
+        continue
     elif es_camino_ciego():
         desapilar_por_camino_ciego()
 
+    caminoSeguido.append((xActual, yActual, es_bifurcacion(), xAnterior, yAnterior))
+    for i in range(8):
+        print(i, maze[i][:])
 print("los caminos hayados al final fueron los siguientes: ")
 if len(caminosExitosos) == 0:
     print("no hay soluciones para mostrar")
