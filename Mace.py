@@ -71,27 +71,8 @@ def suma_opciones():
     return maze[x][y + 1] + maze[x - 1][y] + maze[x][y - 1] + maze[x + 1][y]
 
 
-def no_es_anterior():
-    global maze, xActual, yActual, xAnterior, yAnterior, caminoSeguido
-    s = caminoSeguido.copy()
-
-    if len(s) > 2:
-        #s.pop()
-        s.pop()
-        g, h, j = s.pop()
-        return g, h
-    else:
-        return -1, -1
-
-
 def camino_abierto(x, y):
     global maze, xActual, yActual, xAnterior, yAnterior, caminoSeguido
-    k, l = no_es_anterior()
-    if (k == (xActual + x)) and (l == (yActual + y)):
-        return False
-    # if ((xActual + x) == xAnterior) and ((yActual + y) == yAnterior):
-    #    return False
-
     if maze[xActual + x][yActual + y] == 0:
         return True
     return False
@@ -103,7 +84,6 @@ def desapilar_por_camino_ciego():
 
     while not c:
         a, b, c = caminoSeguido.pop()
-        d, f = anteriores.pop()
         if a == xInicial and b == yInicial:
             xActual = xInicial
             yActual = yInicial
@@ -115,8 +95,6 @@ def desapilar_por_camino_ciego():
         elif c:
             xActual = a
             yActual = b
-            xAnterior = d
-            yAnterior = f
             sellar_camino_ciego()
             caminoSeguido.append((a, b, es_bifurcacion()))
 
@@ -140,7 +118,6 @@ while not todoExplorado:
     print("Coordenada X actual: " + str(xActual) + ".Coordenada Y actual: " + str(yActual))
     avanzar()
     caminoSeguido.append((xActual, yActual, es_bifurcacion()))
-    anteriores.append((xAnterior, yAnterior))
     if xActual == xFinal and yActual == yFinal:
         e = caminoSeguido
         caminosExitosos.append(str(caminoSeguido))
