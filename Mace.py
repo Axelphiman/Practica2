@@ -1,4 +1,4 @@
-xInicial = 1
+xInicial = 9
 yInicial = 1
 xFinal = 3  # 9
 yFinal = 8  # 3
@@ -7,15 +7,12 @@ yActual = yInicial
 xAnterior = xInicial
 yAnterior = yInicial
 caminoSeguido = []
-anteriores = []
+
 bifurcaciones = []
 caminosExitosos = []
 todoExplorado = False
 finalEncontrado = False
 maze = []
-
-
-# maze2 = []
 
 
 def cargar_laberinto():
@@ -36,24 +33,45 @@ def cargar_laberinto():
 
 def avanzar():
     global xActual, yActual, xAnterior, yAnterior
-    # hacia derecha
-    if camino_abierto(0, 1):
+
+    if camino_abierto(0, 1) and no_devolverse(0, 1):
         yAnterior = yActual
-        yActual += 1
-    # hacia abajo
-    elif camino_abierto(1, 0):
         xAnterior = xActual
-        xActual += 1
-    # hacia izquierda
-    elif camino_abierto(0, -1):
+        yActual = yActual + 1
+    elif camino_abierto(1, 0) and no_devolverse(1, 0):
         yAnterior = yActual
-        yActual -= 1
-    # hacia arriba
-    elif camino_abierto(-1, 0):
         xAnterior = xActual
-        xActual -= 1
+        xActual = xActual + 1
+    elif camino_abierto(0, -1) and no_devolverse(0, -1):
+        yAnterior = yActual
+        xAnterior = xActual
+        yActual = yActual - 1
+    elif camino_abierto(-1, 0) and no_devolverse(-1, 0):
+        yAnterior = yActual
+        xAnterior = xActual
+        xActual = xActual - 1
     else:
-        desapilar_por_camino_ciego()
+        print("algo se hizo mal parcerito")
+    # hacia derecha
+    # if camino_abierto(0, 1):
+    #     yAnterior = yActual
+    #     yActual += 1
+    #     print("paila socio, se fue a la derecha")
+    # # hacia abajo
+    # elif camino_abierto(1, 0):
+    #     xAnterior = xActual
+    #     xActual += 1
+    # # hacia izquierda
+    # elif camino_abierto(0, -1):
+    #     yAnterior = yActual
+    #     yActual -= 1
+    #     print("paila socio, se fue a la izquierda")
+    # # hacia arriba
+    # elif camino_abierto(-1, 0):
+    #     xAnterior = xActual
+    #     xActual -= 1
+    # # else:
+    # #     desapilar_por_camino_ciego()
 
 
 def es_bifurcacion():
@@ -72,18 +90,32 @@ def suma_opciones():
 
 
 def camino_abierto(x, y):
-    global maze, xActual, yActual, xAnterior, yAnterior, caminoSeguido
-    if maze[xActual + x][yActual + y] == 0:
-        return True
-    return False
+    global maze, xActual, yActual, xAnterior, yAnterior, xInicial, yInicial
+    return maze[xActual + x][yActual + y] == 0
+    # flag1 = True
+    # flag2 = True
+    # if ((xActual + x) is xAnterior) and ((yActual + y) is yAnterior):
+    #     flag1 = False
+    #     return False
+    # if maze[xActual + x][yActual + y] != 0:
+    #     flag2 = False
+    #     return False
+    # flag3 = flag2 and flag1
+    #
+    # return flag3
+
+
+def no_devolverse(x, y):
+    global maze, xActual, yActual, xAnterior, yAnterior, xInicial, yInicial
+    return not (((xActual + x) == xAnterior) and ((yActual + y) == yAnterior))
 
 
 def desapilar_por_camino_ciego():
     global xInicial, yInicial, xActual, yActual, xAnterior, yAnterior, caminoSeguido, todoExplorado, maze
-    a, b, c = -1, -1, False
+    a, b, c, ww, www = -1, -1, False, -1, -1
 
     while not c:
-        a, b, c = caminoSeguido.pop()
+        a, b, c, ww, www = caminoSeguido.pop()
         if a == xInicial and b == yInicial:
             xActual = xInicial
             yActual = yInicial
@@ -95,8 +127,14 @@ def desapilar_por_camino_ciego():
         elif c:
             xActual = a
             yActual = b
+            xAnterior = ww
+            yAnterior = www
             sellar_camino_ciego()
-            caminoSeguido.append((a, b, es_bifurcacion()))
+            xActual = a
+            yActual = b
+            xAnterior = ww
+            yAnterior = www
+            caminoSeguido.append((a, b, es_bifurcacion(), ww, www))
 
 
 def sellar_camino_ciego():
@@ -111,24 +149,26 @@ def sellar_camino_ciego():
 
 # A PARTIR DE AQUÍ EJECUCIÓN DEL PROGRAMA
 cargar_laberinto()
-caminoSeguido.append((xInicial, yInicial, True))
-anteriores.append((xAnterior, yAnterior))
+caminoSeguido.append((xInicial, yInicial, True, xInicial, yInicial))
+
 while not todoExplorado:
 
-    print("Coordenada X actual: " + str(xActual) + ".Coordenada Y actual: " + str(yActual))
+    print(" X actual: " + str(xActual) + ". Y actual: " + str(yActual))
+    print(" X anterior: " + str(xAnterior) + ". Y anterior: " + str(yAnterior))
     avanzar()
-    caminoSeguido.append((xActual, yActual, es_bifurcacion()))
+    caminoSeguido.append((xActual, yActual, es_bifurcacion(), xAnterior, yAnterior))
     if xActual == xFinal and yActual == yFinal:
-        e = caminoSeguido
         caminosExitosos.append(str(caminoSeguido))
         desapilar_por_camino_ciego()
         print("Coordenada X actual: " + str(xActual) + ".Coordenada Y actual: " + str(yActual))
         print("final encontrado")
 
-    if es_camino_ciego():
+    elif es_camino_ciego():
         desapilar_por_camino_ciego()
 
 print("los caminos hayados al final fueron los siguientes: ")
-
-for element in caminosExitosos:
-    print(element)
+if len(caminosExitosos) == 0:
+    print("no hay soluciones para mostrar")
+else:
+    for element in caminosExitosos:
+        print(element)
