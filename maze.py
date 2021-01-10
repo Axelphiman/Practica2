@@ -1,7 +1,7 @@
 xInicial = 1
 yInicial = 1
-xFinal = 6  # 9
-yFinal = 12  # 3
+xFinal = 8
+yFinal = 8
 xActual = xInicial
 yActual = yInicial
 xAnterior = xInicial
@@ -104,8 +104,6 @@ def desapilar_por_camino_ciego():
             xAnterior = ww
             yAnterior = www
             sellar_camino_ciego()
-            xActual = a
-            yActual = b
             xAnterior = ww
             yAnterior = www
             caminoSeguido.append((a, b, es_bifurcacion(), ww, www))
@@ -115,10 +113,15 @@ def sellar_camino_ciego():
     global maze, xActual, xInicial, yActual, yInicial, xAnterior, yAnterior
     x = xActual
     y = yActual
+    xa = xAnterior
+    ya = yAnterior
     avanzar()
     maze[xActual][yActual] = 1
     xActual = x
     yActual = y
+    xAnterior = xa
+    yAnterior = ya
+
 
 
 # A PARTIR DE AQUÍ EJECUCIÓN DEL PROGRAMA
@@ -146,8 +149,8 @@ while not todoExplorado:
         desapilar_por_camino_ciego()
 
     caminoSeguido.append((xActual, yActual, es_bifurcacion(), xAnterior, yAnterior))
-    for i in range(8):
-        print(i, maze[i][:])
+    # for i in range(8):
+    #    print(i, maze[i][:])
 print("los caminos hayados al final fueron los siguientes: ")
 if len(caminosExitosos) == 0:
     print("no hay soluciones para mostrar")
