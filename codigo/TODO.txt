@@ -3,7 +3,7 @@
 TODO: manual con info del formato de los laberintos, delimitacion del problema
 TODO: añadir interacción con usuario: mostrar y elegir caminos, manual, cargar archivos, elegir inicio y fin
 
-#Sidequests
+#Sidequest
 TODO: cambiar por nombre significativos
 TODO: optimizar
 
