@@ -1,2 +1,2 @@
-#Maze Solver
+# Maze Solver
 
