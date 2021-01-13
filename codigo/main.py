@@ -10,6 +10,8 @@ matriz_laberinto = []
 cantidad_de_ceros = 0
 camino_seguido = []
 caminos_exitosos = []
+filas = -1
+columnas = -1
 
 
 def cargar_laberinto():
@@ -24,40 +26,20 @@ def cargar_laberinto():
         matriz_laberinto: le agrega los unos y ceros que conforman el laberinto
 
     """
-    global matriz_laberinto, cantidad_de_ceros
-    file = open("../laberintos/laberinto1.txt")
-    lines = file.readlines()
+    global matriz_laberinto, cantidad_de_ceros, filas, columnas
+    archivo = open("../laberintos/laberinto1.txt")
+    archivo_completo = archivo.readlines()
     matriz_laberinto = []
-    row = []
-    m = file.readline()
-    for line in lines:
-        for char in line:
+    linea = []
+    columnas = len(archivo.readline())
+    for renglon in archivo_completo:
+        for char in renglon:
             if char in "10":
-                row.append(int(char))
-        matriz_laberinto.append(row)
-        row = []
-    contar_ceros(len(lines) - 1, len(m))
+                linea.append(int(char))
+        matriz_laberinto.append(linea)
+        linea = []
+    filas = len(archivo_completo)
     sellar_camino_cerrado()
-    contar_ceros(len(lines) - 1, len(m))
-
-
-def contar_ceros(filas, columnas):
-    """Cuenta la cantidad de celdas habiles para moverse
-
-    Función:
-        evitar bucles infinitos en caminos circulares
-
-    Modifica:
-        cantidad_de_ceros: le da el valor de celdas disponibles para el movimiento
-
-    """
-    global matriz_laberinto, cantidad_de_ceros
-    i = 0
-    for filas in range(12):
-        for columnas in range(12):
-            if matriz_laberinto[filas][columnas] == 0:
-                i = i + 1
-    cantidad_de_ceros = i
 
 
 def es_camino_cerrado(x_parametro, y_parametro):
@@ -120,14 +102,12 @@ def sellar_camino_cerrado():
             cantidad_de_ceros: la cantidad de ceros se actualiza, pues se disminuye
 
     """
-    global matriz_laberinto, cantidad_de_ceros
-    i = 0
-    while i <= cantidad_de_ceros:
-        for x4 in range(1, 11):
-            for y in range(1, 11):
+    global matriz_laberinto, cantidad_de_ceros, filas, columnas
+    for _ in range(filas + columnas):
+        for x4 in range(1, filas):
+            for y in range(1, columnas):
                 if es_camino_cerrado(x4, y):
                     matriz_laberinto[x4][y] = 1
-        i += 1
 
 
 def avanzar():
@@ -146,36 +126,31 @@ def avanzar():
 
     global x_actual, y_actual
     camino_seguido.append((x_actual, y_actual))
-    numero_random = random.randint(1, 4)
-    # derecha
-    if camino_disponible(0, 1) and numero_random == 1:
-        x_actual = x_actual
-        y_actual = y_actual + 1
-    # abajo
-    elif camino_disponible(1, 0) and numero_random == 2:
-        y_actual = y_actual
-        x_actual = x_actual + 1
-    # izquierda
-    elif camino_disponible(0, -1) and numero_random == 3:
-        x_actual = x_actual
-        y_actual = y_actual - 1
-    # arriba
-    elif camino_disponible(-1, 0) and numero_random == 4:
-        y_actual = y_actual
-        x_actual = x_actual - 1
-    else:
-        if camino_disponible(0, 1):
+    var = [0, 1, 2, 3]
+    flag = False
+    while not flag:
+        numero_random = random.randint(0, 3)   #2
+        # derecha
+        if camino_disponible(0, 1) and var[numero_random] == 0:
             x_actual = x_actual
             y_actual = y_actual + 1
-        elif camino_disponible(1, 0):
+            flag = True
+        # abajo
+        elif camino_disponible(1, 0) and var[numero_random] == 1:
             y_actual = y_actual
             x_actual = x_actual + 1
-        elif camino_disponible(0, -1):
+            flag = True
+        # izquierda
+        elif camino_disponible(0, -1) and var[numero_random] == 2:
             x_actual = x_actual
             y_actual = y_actual - 1
-        elif camino_disponible(-1, 0):
+            flag = True
+        # arriba
+        elif camino_disponible(-1, 0) and var[numero_random] == 3:
             y_actual = y_actual
             x_actual = x_actual - 1
+            flag = True
+
 
 
 def camino_disponible(x_parametro, y_parametro):
@@ -195,23 +170,6 @@ def camino_disponible(x_parametro, y_parametro):
     """
     global matriz_laberinto, x_actual, y_actual
     return matriz_laberinto[x_actual + x_parametro][y_actual + y_parametro] == 0
-
-
-# Este método se crea debido a que las pilas de python no lo implementan
-def peek(stack):
-    """Permite visualizar el último elemento añadido a la lista sin eliminarlo
-
-        Argumentos:
-            stack: lista[]
-
-        Retorno:
-            var: variable dependiente de lo que se almacene en la lista
-    """
-    if stack == []:
-        return None
-    else:
-        copia = stack.copy()
-        return copia.pop()
 
 
 def eliminar_caminos_repetidos():
@@ -238,23 +196,23 @@ cargar_laberinto()
 
 for x in range(500000):
     avanzar()
-    w = camino_seguido.copy()
-    w.pop()
-    if (x_actual, y_actual) in w:
+    aux, aux1 = camino_seguido.pop()
+    if (aux, aux1) in camino_seguido:
         x_actual = x_inicial
         y_actual = y_inicial
         camino_seguido.clear()
+    else:
+        camino_seguido.append((aux, aux1))
 
     if (x_actual == x_final) and (y_actual == y_final):
         camino_seguido.append((x_actual, y_actual))
-        s = camino_seguido.copy()
         caminos_exitosos.append(str([camino_seguido]))
         camino_seguido.clear()
         x_actual = x_inicial
         y_actual = y_inicial
 
 eliminar_caminos_repetidos()
-#mostrar_soluciones()
+# mostrar_soluciones()
 
 
 for element in caminos_exitosos:
@@ -265,4 +223,3 @@ for element in caminos_exitosos:
 # print(caminosExitosos.pop())
 # print(len(caminosExitosos))
 # print(cantidadDeCeros)
-
