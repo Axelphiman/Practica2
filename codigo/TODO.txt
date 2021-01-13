@@ -19,3 +19,4 @@ DONE: eliminar caminos exitosos repetidos
 DONE: de los guardados que van de inicio a fin descartar los que tengan casillas repetidas
         (porque no se puede pasar dos veces por la misma casilla)
 
+
