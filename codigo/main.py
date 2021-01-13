@@ -29,18 +29,19 @@ def cargar_laberinto():
     lines = file.readlines()
     matriz_laberinto = []
     row = []
+    m = file.readline()
     for line in lines:
         for char in line:
             if char in "10":
                 row.append(int(char))
         matriz_laberinto.append(row)
         row = []
-    contar_ceros()
+    contar_ceros(len(lines) - 1, len(m))
     sellar_camino_cerrado()
-    contar_ceros()
+    contar_ceros(len(lines) - 1, len(m))
 
 
-def contar_ceros():
+def contar_ceros(filas, columnas):
     """Cuenta la cantidad de celdas habiles para moverse
 
     Función:
@@ -52,9 +53,9 @@ def contar_ceros():
     """
     global matriz_laberinto, cantidad_de_ceros
     i = 0
-    for m in range(12):
-        for n in range(12):
-            if matriz_laberinto[m][n] == 0:
+    for filas in range(12):
+        for columnas in range(12):
+            if matriz_laberinto[filas][columnas] == 0:
                 i = i + 1
     cantidad_de_ceros = i
 
@@ -78,7 +79,8 @@ def es_camino_cerrado(x_parametro, y_parametro):
     global matriz_laberinto, x_inicial, y_inicial, x_final, y_final
     # Notar que una celda es un camino sin salida si la suma del valor de
     # las celdas adyacentes es mayor o igual a 3
-    if (x_parametro == x_inicial and y_parametro == y_inicial) or (x_parametro == x_final and y_parametro == y_final):
+    if (x_parametro == x_inicial and y_parametro == y_inicial) \
+            or (x_parametro == x_final and y_parametro == y_final):
         return False
     else:
         return suma_adyacentes(x_parametro, y_parametro) >= 3
@@ -126,7 +128,6 @@ def sellar_camino_cerrado():
                 if es_camino_cerrado(x4, y):
                     matriz_laberinto[x4][y] = 1
         i += 1
-    contar_ceros()
 
 
 def avanzar():
@@ -196,7 +197,7 @@ def camino_disponible(x_parametro, y_parametro):
     return matriz_laberinto[x_actual + x_parametro][y_actual + y_parametro] == 0
 
 
-# Este método se crea debido a que las listas de python no lo implementan
+# Este método se crea debido a que las pilas de python no lo implementan
 def peek(stack):
     """Permite visualizar el último elemento añadido a la lista sin eliminarlo
 
@@ -213,9 +214,29 @@ def peek(stack):
         return copia.pop()
 
 
+def eliminar_caminos_repetidos():
+    global caminos_exitosos
+    caminos_exitosos = sorted(set(caminos_exitosos), key=lambda k: caminos_exitosos.index(k))
+
+
+def mostrar_soluciones():
+    if len(caminos_exitosos) == 0:
+        print("Este laberinto no tiene solución")
+    else:
+        copia = caminos_exitosos.copy()
+        print("Hubo " + str(len(caminos_exitosos)) + " soluciones distintas para este laberinto")
+        print("ingrese el número de la que desea ver, ingrese XXX para ver la mejor, ingrese WWWW" \
+              + " para verlas todas")
+        eleccion = int(input())
+        for x in range(eleccion - 1):
+            copia.pop
+        print(copia.pop())
+
+
 # A PARTIR DE AQUÍ EJECUCIÓN DEL PROGRAMA
 cargar_laberinto()
-for x in range(100000):
+
+for x in range(500000):
     avanzar()
     w = camino_seguido.copy()
     w.pop()
@@ -223,27 +244,25 @@ for x in range(100000):
         x_actual = x_inicial
         y_actual = y_inicial
         camino_seguido.clear()
-        w.clear()
+
     if (x_actual == x_final) and (y_actual == y_final):
         camino_seguido.append((x_actual, y_actual))
         s = camino_seguido.copy()
-
-        if len(s) <= cantidad_de_ceros:
-            caminos_exitosos.append(str([s]))
+        caminos_exitosos.append(str([camino_seguido]))
         camino_seguido.clear()
         x_actual = x_inicial
         y_actual = y_inicial
 
-print(len(caminos_exitosos))
-newlist = sorted(set(caminos_exitosos), key=lambda x: caminos_exitosos.index(x))
+eliminar_caminos_repetidos()
+#mostrar_soluciones()
 
-for element in newlist:
+
+for element in caminos_exitosos:
     print(element)
 
-print(len(newlist))
 # DEBUG PRINTS
+# print(len(caminos_exitosos))
 # print(caminosExitosos.pop())
 # print(len(caminosExitosos))
 # print(cantidadDeCeros)
-# for element in maze:
-# print(element)
+
