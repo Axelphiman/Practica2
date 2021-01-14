@@ -12,7 +12,7 @@
 #
 import os
 import sys
-sys.path.insert(0, '/home/restrepotorres/Documentos/Practica2/codigo')
+sys.path.insert(0, '/home/restrepotorres/Documentos/pycharm/Practica2/codigo')
 
 
 # -- Project information -----------------------------------------------------
@@ -31,7 +31,6 @@ release = '1.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc',
-    'sphinx.ext.napoleon',
     'sphinx.ext.viewcode'
 ]
 

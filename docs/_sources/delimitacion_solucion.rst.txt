@@ -1,3 +1,0 @@
-Delimitación de la solución
-===========================
-
