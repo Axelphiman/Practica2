@@ -41,13 +41,17 @@ def cargar_laberinto():
         linea = []
     filas = len(archivo_completo)
     sellar_camino_cerrado()
+    x_final = filas - 2
+    y_final = columnas - 2
+    print(x_final, y_final)
 
 
 def es_camino_cerrado(x_parametro, y_parametro):
     """Compueba si una celda es o no un camino sin salida
 
     Función:
-        Servir como método de control para otros métodos
+        Servir como método de control para apoyar las
+        decisiones tomadas en otros métodos
 
     Argumentos:
         x_parametro (int): coordenada x de la casilla a verificar
@@ -55,7 +59,7 @@ def es_camino_cerrado(x_parametro, y_parametro):
         y_parametro (int): coordenada y de la casilla a verificar
 
     Retorno:
-        bool: True en caso de que la casilla sea un camino sin salida, falso
+        Bool: True en caso de que la casilla sea un camino sin salida, falso
         de lo contrario
 
     """
@@ -72,7 +76,7 @@ def es_camino_cerrado(x_parametro, y_parametro):
 def suma_adyacentes(x_parametro, y_parametro):
     """Suma los valores de las casillas adyacentes
 
-        Función: método auxiliar a otros métodos que requieren
+        Función: método auxiliar para el funcionamiento de otros métodos que requieren
         comprobar el estado de una casilla
 
         Argumentos:
@@ -114,11 +118,13 @@ def sellar_camino_cerrado():
 def avanzar():
     """Avanza de una casilla a una subsiguiente
         Función:
-            avanzar aleatoriamente por la matriz actualizando las coordenadas
+            avanzar por la matriz actualizando las coordenadas actuales
             y comprobando que casillas estan disponibles para el avance
+
         Modifica:
-            x_actual: le resta o suma (1)
-            y_actual: le resta o suma (1)
+            x_actual: le resta o suma uno(1) a la coordenada x actual
+            y_actual: le resta o suma uno(1) a la coordenada y actual
+
     """
 
     global x_actual, y_actual, camino_seguido
@@ -126,31 +132,29 @@ def avanzar():
     bifurcaciones.append(es_bifurcacion())
     numero_random = random.randint(1, 4)
     flag = True
-    i = 0
     while flag:
-        # derecha
+        # movimiento a la derecha
         if camino_disponible(0, 1) and (numero_random % 4) == 1:
             x_actual = x_actual
             y_actual = y_actual + 1
             flag = False
-        # abajo
+        # movimiento a abajo
         elif camino_disponible(1, 0) and (numero_random % 4) == 2:
             y_actual = y_actual
             x_actual = x_actual + 1
             flag = False
-        # izquierda
+        # movimiento a la izquierda
         elif camino_disponible(0, -1) and (numero_random % 4) == 3:
             x_actual = x_actual
             y_actual = y_actual - 1
             flag = False
-        # arriba
+        # movimiento a arriba
         elif camino_disponible(-1, 0) and (numero_random % 4) == 9:
             y_actual = y_actual
             x_actual = x_actual - 1
             flag = False
         else:
             numero_random += 1
-        i += 1
     no_repetir()
     add_a_finales()
 
@@ -175,11 +179,31 @@ def camino_disponible(x_parametro, y_parametro):
 
 
 def eliminar_caminos_repetidos():
+    """Elimina soluciones al laberinto duplicadas
+    """
     global caminos_exitosos
     caminos_exitosos = sorted(set(caminos_exitosos), key=lambda k: caminos_exitosos.index(k))
 
 
 def es_bifurcacion():
+    """Compueba si una celda es o no un camino una bifurcación del camino
+
+    Función:
+        Servir como método de control para apoyar las
+        decisiones tomadas en otros métodos
+
+    Argumentos:
+        x_parametro (int): coordenada x de la casilla a verificar
+
+        y_parametro (int): coordenada y de la casilla a verificar
+
+    Retorno:
+        Bool: True en caso de que la casilla sea bifurcacion, falso
+        de lo contrario
+
+    """
+    if (x_actual == x_inicial) and (y_actual == y_inicial):
+        return True
     return suma_adyacentes(x_actual, y_actual) < 2
 
 
@@ -198,7 +222,12 @@ def mostrar_soluciones():
 
 
 def no_repetir():
-    global x_actual, y_actual, camino_seguido, bifurcaciones
+    """Evita que se pase dos veces por encima del mismo camino
+
+
+
+    """
+    global x_actual, y_actual, camino_seguido, bifurcaciones, matriz_laberinto
     aux, aux1, aux3 = camino_seguido.pop()
     if (aux, aux1, aux3) in camino_seguido or (aux, aux1, not aux3) in camino_seguido:
         a, b, c = camino_seguido.pop()
@@ -223,22 +252,11 @@ def add_a_finales():
         y_actual = y_inicial
 
 
-def cantidad_de_ceros_superada():
-    2 + 2
-
-
 # A PARTIR DE AQUÍ EJECUCIÓN DEL PROGRAMA
 cargar_laberinto()
-for element in matriz_laberinto:
-    print(element)
-
 for x in range(500000):
     avanzar()
 
 print(len(caminos_exitosos))
 eliminar_caminos_repetidos()
 print(len(caminos_exitosos))
-# mostrar_soluciones()
-
-# for element in caminos_exitosos:
-#    print(element)
