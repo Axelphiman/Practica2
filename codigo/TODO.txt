@@ -6,7 +6,7 @@ TODO: devolverse a las bifurcaciones
 TODO: no irse por casillas en las que ya se habia estado
 
 #Sidequest
-TODO: cambiar por nombre significativos
+TODO: cambiar por nombre significativos 
 TODO: optimizar
 
 
