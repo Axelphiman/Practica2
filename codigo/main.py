@@ -7,7 +7,6 @@ y_final = 10
 x_actual = x_inicial
 y_actual = y_inicial
 matriz_laberinto = []
-cantidad_de_ceros = 0
 camino_seguido = []
 caminos_exitosos = []
 bifurcaciones = []
@@ -27,12 +26,13 @@ def cargar_laberinto():
         matriz_laberinto: le agrega los unos y ceros que conforman el laberinto
 
     """
-    global matriz_laberinto, cantidad_de_ceros, filas, columnas
+    global matriz_laberinto, filas, columnas
     archivo = open("../laberintos/laberinto1.txt")
     archivo_completo = archivo.readlines()
     matriz_laberinto = []
     linea = []
-    columnas = len(archivo.readline())
+    columnas = len(archivo_completo)
+
     for renglon in archivo_completo:
         for char in renglon:
             if char in "10":
@@ -84,10 +84,10 @@ def suma_adyacentes(x_parametro, y_parametro):
             int: suma del valos de las casilla adyacentes
     """
     global matriz_laberinto
-    return matriz_laberinto[x_parametro][y_parametro + 1] \
-           + matriz_laberinto[x_parametro][y_parametro - 1] \
-           + matriz_laberinto[x_parametro + 1][y_parametro] \
-           + matriz_laberinto[x_parametro - 1][y_parametro]
+    return (matriz_laberinto[x_parametro][y_parametro + 1] +
+            matriz_laberinto[x_parametro][y_parametro - 1] +
+            matriz_laberinto[x_parametro + 1][y_parametro] +
+            matriz_laberinto[x_parametro - 1][y_parametro])
 
 
 def sellar_camino_cerrado():
@@ -100,13 +100,13 @@ def sellar_camino_cerrado():
         Modifica:
             matriz_laberintos: cambia el valor de las celdas que son camino cerrado
 
-            cantidad_de_ceros: la cantidad de ceros se actualiza, pues se disminuye
-
     """
-    global matriz_laberinto, cantidad_de_ceros, filas, columnas
-    for _ in range(filas + columnas):
-        for x4 in range(1, filas):
-            for y in range(1, columnas):
+    global matriz_laberinto, filas, columnas
+    print(filas)
+    print(columnas)
+    for w in range(filas + columnas):
+        for x4 in range(0, filas - 1):
+            for y in range(0, columnas - 1):
                 if es_camino_cerrado(x4, y):
                     matriz_laberinto[x4][y] = 1
 
@@ -122,10 +122,11 @@ def avanzar():
     """
 
     global x_actual, y_actual, camino_seguido
-    camino_seguido.append((x_actual, y_actual))
+    camino_seguido.append((x_actual, y_actual, es_bifurcacion()))
     bifurcaciones.append(es_bifurcacion())
     numero_random = random.randint(1, 4)
     flag = True
+    i = 0
     while flag:
         # derecha
         if camino_disponible(0, 1) and (numero_random % 4) == 1:
@@ -149,6 +150,7 @@ def avanzar():
             flag = False
         else:
             numero_random += 1
+        i += 1
     no_repetir()
     add_a_finales()
 
@@ -187,7 +189,7 @@ def mostrar_soluciones():
     else:
         copia = caminos_exitosos.copy()
         print("Hubo " + str(len(caminos_exitosos)) + " soluciones distintas para este laberinto")
-        print("ingrese el número de la que desea ver, ingrese XXX para ver la mejor, ingrese WWWW" \
+        print("ingrese el número de la que desea ver, ingrese XXX para ver la mejor, ingrese WWWW"
               + " para verlas todas")
         eleccion = int(input())
         for x in range(eleccion - 1):
@@ -196,14 +198,18 @@ def mostrar_soluciones():
 
 
 def no_repetir():
-    global x_actual, y_actual
-    aux, aux1 = camino_seguido.pop()
-    if (aux, aux1) in camino_seguido:
-        x_actual = x_inicial
-        y_actual = y_inicial
-        camino_seguido.clear()
+    global x_actual, y_actual, camino_seguido, bifurcaciones
+    aux, aux1, aux3 = camino_seguido.pop()
+    if (aux, aux1, aux3) in camino_seguido or (aux, aux1, not aux3) in camino_seguido:
+        a, b, c = camino_seguido.pop()
+        while not c:
+            a, b, c = camino_seguido.pop()
+        x_actual, y_actual = a, b
+        return True
+
     else:
-        camino_seguido.append((aux, aux1))
+        camino_seguido.append((aux, aux1, aux3))
+        return False
 
 
 def add_a_finales():
@@ -212,19 +218,27 @@ def add_a_finales():
         camino_seguido.append((x_actual, y_actual))
         caminos_exitosos.append(str([camino_seguido]))
         camino_seguido.clear()
+        bifurcaciones.clear()
         x_actual = x_inicial
         y_actual = y_inicial
 
 
+def cantidad_de_ceros_superada():
+    2 + 2
+
+
 # A PARTIR DE AQUÍ EJECUCIÓN DEL PROGRAMA
 cargar_laberinto()
+for element in matriz_laberinto:
+    print(element)
 
 for x in range(500000):
     avanzar()
 
 print(len(caminos_exitosos))
 eliminar_caminos_repetidos()
+print(len(caminos_exitosos))
 # mostrar_soluciones()
 
-for element in caminos_exitosos:
-    print(element)
+# for element in caminos_exitosos:
+#    print(element)
