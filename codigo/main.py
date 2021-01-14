@@ -10,6 +10,7 @@ matriz_laberinto = []
 cantidad_de_ceros = 0
 camino_seguido = []
 caminos_exitosos = []
+bifurcaciones = []
 filas = -1
 columnas = -1
 
@@ -112,45 +113,44 @@ def sellar_camino_cerrado():
 
 def avanzar():
     """Avanza de una casilla a una subsiguiente
-
         Función:
             avanzar aleatoriamente por la matriz actualizando las coordenadas
             y comprobando que casillas estan disponibles para el avance
-
         Modifica:
             x_actual: le resta o suma (1)
-
             y_actual: le resta o suma (1)
-
     """
 
-    global x_actual, y_actual
+    global x_actual, y_actual, camino_seguido
     camino_seguido.append((x_actual, y_actual))
-    var = [0, 1, 2, 3]
-    flag = False
-    while not flag:
-        numero_random = random.randint(0, 3)   #2
+    bifurcaciones.append(es_bifurcacion())
+    numero_random = random.randint(1, 4)
+    flag = True
+    while flag:
         # derecha
-        if camino_disponible(0, 1) and var[numero_random] == 0:
+        if camino_disponible(0, 1) and (numero_random % 4) == 1:
             x_actual = x_actual
             y_actual = y_actual + 1
-            flag = True
+            flag = False
         # abajo
-        elif camino_disponible(1, 0) and var[numero_random] == 1:
+        elif camino_disponible(1, 0) and (numero_random % 4) == 2:
             y_actual = y_actual
             x_actual = x_actual + 1
-            flag = True
+            flag = False
         # izquierda
-        elif camino_disponible(0, -1) and var[numero_random] == 2:
+        elif camino_disponible(0, -1) and (numero_random % 4) == 3:
             x_actual = x_actual
             y_actual = y_actual - 1
-            flag = True
+            flag = False
         # arriba
-        elif camino_disponible(-1, 0) and var[numero_random] == 3:
+        elif camino_disponible(-1, 0) and (numero_random % 4) == 9:
             y_actual = y_actual
             x_actual = x_actual - 1
-            flag = True
-
+            flag = False
+        else:
+            numero_random += 1
+    no_repetir()
+    add_a_finales()
 
 
 def camino_disponible(x_parametro, y_parametro):
@@ -177,6 +177,10 @@ def eliminar_caminos_repetidos():
     caminos_exitosos = sorted(set(caminos_exitosos), key=lambda k: caminos_exitosos.index(k))
 
 
+def es_bifurcacion():
+    return suma_adyacentes(x_actual, y_actual) < 2
+
+
 def mostrar_soluciones():
     if len(caminos_exitosos) == 0:
         print("Este laberinto no tiene solución")
@@ -191,11 +195,8 @@ def mostrar_soluciones():
         print(copia.pop())
 
 
-# A PARTIR DE AQUÍ EJECUCIÓN DEL PROGRAMA
-cargar_laberinto()
-
-for x in range(500000):
-    avanzar()
+def no_repetir():
+    global x_actual, y_actual
     aux, aux1 = camino_seguido.pop()
     if (aux, aux1) in camino_seguido:
         x_actual = x_inicial
@@ -204,6 +205,9 @@ for x in range(500000):
     else:
         camino_seguido.append((aux, aux1))
 
+
+def add_a_finales():
+    global x_actual, y_actual, camino_seguido, caminos_exitosos
     if (x_actual == x_final) and (y_actual == y_final):
         camino_seguido.append((x_actual, y_actual))
         caminos_exitosos.append(str([camino_seguido]))
@@ -211,15 +215,16 @@ for x in range(500000):
         x_actual = x_inicial
         y_actual = y_inicial
 
+
+# A PARTIR DE AQUÍ EJECUCIÓN DEL PROGRAMA
+cargar_laberinto()
+
+for x in range(500000):
+    avanzar()
+
+print(len(caminos_exitosos))
 eliminar_caminos_repetidos()
 # mostrar_soluciones()
 
-
 for element in caminos_exitosos:
     print(element)
-
-# DEBUG PRINTS
-# print(len(caminos_exitosos))
-# print(caminosExitosos.pop())
-# print(len(caminosExitosos))
-# print(cantidadDeCeros)

@@ -2,6 +2,8 @@
 #interacción con usuario
 TODO: manual con info del formato de los laberintos, delimitacion del problema
 TODO: añadir interacción con usuario: mostrar y elegir caminos, manual, cargar archivos, elegir inicio y fin
+TODO: devolverse a las bifurcaciones
+TODO: no irse por casillas en las que ya se habia estado
 
 #Sidequest
 TODO: cambiar por nombre significativos
