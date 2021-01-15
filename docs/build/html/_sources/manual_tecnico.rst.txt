@@ -4,10 +4,8 @@ Manual técnico
 **El manual técnico se compone de las siguientes partes:**
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-   delimitacion_solucion
+   sistema_archivos
    explicacion_solucion
    codigo_generado
-   sistema_archivos   
-

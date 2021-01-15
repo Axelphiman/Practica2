@@ -100,7 +100,7 @@ def sellar_camino_cerrado():
 
         :Modifica:
             matriz_laberintos: cambia el valor de las celdas que son parte
-             de un camino cerrado.
+            de un camino cerrado.
 
     """
     global matriz_laberinto, filas, columnas
@@ -120,6 +120,7 @@ def avanzar():
 
         :Modifica:
             x_actual: le resta o suma uno (1).
+
             y_actual: le resta o suma uno (1).
 
     """
@@ -246,7 +247,7 @@ def add_a_finales():
 
         :Función:
             Si un camino logra partir desde el inicio y llegar hasta el final,
-             este método lo almacena
+            este método lo almacena.
 
         :Modifica:
             caminos_exitosos: le  añade un nuevo camino a la pila.
