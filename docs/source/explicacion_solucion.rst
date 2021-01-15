@@ -5,16 +5,21 @@ El código que soluciona el laberinto se encuentra en Practica2/codigo/main.py .
 Este código lee un archivo .txt que contiene un rectangulo o cuadrado (todas las lineas
 deben tener la misma longitud) formado de ceros (0) y unos (1) como el que se puede observar a continuación:
 
-111111
-
-101111
-
-100011
-
-111001
-
-111111
-
++--------+
+|1111111 |
+|        |
+|1011111 |
+|        |
+|1011111 |
+|        |
+|1011111 |
+|        |
+|1011111 |
+|        |
+|1000001 |
+|        |
+|1111111 |
++--------+
 En donde  los ceros representan que se puede avanzar por esa celda, mientras que los unos
 representan una pared. Es muy importante que el laberinto tenga una "pared externa" es decir,que
 **todos sus bordes esten conformados por unos**, esto con el fin de evitar errores del tipo
