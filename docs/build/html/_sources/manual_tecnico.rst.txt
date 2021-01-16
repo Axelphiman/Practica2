@@ -12,5 +12,6 @@ Manual técnico
    codigo_generado
 
 Estas páginas se explica lo que hace en cuanto a funcionalidad cada parte del código,
-para los detalles más técnicos hay comentarios dentro del código y el porqué de las
-decisiones tomadas en la construcción del código.
+para los detalles más técnicos   y el porqué de las
+decisiones tomadas en la construcción del código estan los comentarios que empiezan por "#"
+dentro del código.
