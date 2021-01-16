@@ -20,6 +20,7 @@ deben tener la misma longitud) formado de ceros (0) y unos (1) como el que se pu
 |        |
 |1111111 |
 +--------+
+
 En donde  los ceros representan que se puede avanzar por esa celda, mientras que los unos
 representan una pared. Es muy importante que el laberinto tenga una "pared externa" es decir,que
 **todos sus bordes esten conformados por unos**, esto con el fin de evitar errores del tipo
@@ -97,7 +98,6 @@ El laberinto se carga de el .txt a la matriz_laberinto, por defecto y comodidad 
 En el siguiente laberinto X representa el inicio y F el final, se puede observar que sus cordenadas son (1,1) y
 (3,3) respectivamente.
 
-
 +--------+
 |1111111 |
 |        |
@@ -152,6 +152,23 @@ Finalización
 ^^^^^^^^^^^^
 Después de haberse ejecutado determinado número de veces el programa se detiene, elimina los caminos_exitosos duplicados, los ordena
 y dispone una interfaz para interactuar con el usuario
+
+Uso de pilas
+^^^^^^^^^^^^
+En python usar pilas es equivalente a usar listas con los siguientes métodos:
+
++--------------+-------------------------+
+|nombre método |implementación en python |
++==============+=========================+
+| apilar       |pila.append()            |
++--------------+-------------------------+
+| desapilar    | pila.pop()              |
++--------------+-------------------------+
+| cima         | píla[-1]                |
++--------------+-------------------------+
+| esVacia      | len(pila)==0            |
++--------------+-------------------------+
+
 
 
 

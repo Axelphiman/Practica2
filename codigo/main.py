@@ -63,7 +63,9 @@ def es_camino_cerrado(x_parametro: int, y_parametro: int) -> bool:
     """
     global matriz_laberinto, x_inicial, y_inicial, x_final, y_final
     # Notar que una celda es un camino sin salida si la suma del valor de
-    # las celdas adyacentes es mayor o igual a 3
+    # las celdas adyacentes es mayor o igual a 3, es decir, a excepcion de
+    # la celda padre de la celda actual, todas las celdas que  adyacentes
+    # son unos
     if (x_parametro == x_inicial and y_parametro == y_inicial) \
             or (x_parametro == x_final and y_parametro == y_final):
         return False
@@ -84,6 +86,15 @@ def suma_adyacentes(x_parametro: int, y_parametro: int) -> int:
         Retorno:
             int: suma del valos de las casilla adyacentes.
     """
+    # Gran parte de la funcionalidad del código se basa en saber que en que tipo de celda se
+    # esta parado. Estos tipos de celda son:
+    #   celdas normales: celdas que no son caminos cerrados ni bifurcaciones
+    #   bifurcaciones: celdas que para el próximo movimiento tienen más de una opción
+    #   camino cerrado: celdas que son callejones sin salida en donde el único camino disponible
+    #                   es devolverse por donde se vino
+    #
+    # Por medio de la suma de las celdas adyacentes es posible saber en que tipo de celda se esta
+
     global matriz_laberinto
     return (matriz_laberinto[x_parametro][y_parametro + 1] +
             matriz_laberinto[x_parametro][y_parametro - 1] +
@@ -104,8 +115,8 @@ def sellar_camino_cerrado():
 
     """
     global matriz_laberinto, filas, columnas
-    for i in range(filas + columnas):
-        for x4 in range(0, filas - 1):
+    for i in range(filas + columnas):  # Notese que el callejon sin salida más largo que puede llegar a darse
+        for x4 in range(0, filas - 1):  # tendria una longitud de filas+columnas (una "L")
             for y in range(0, columnas - 1):
                 if es_camino_cerrado(x4, y):
                     matriz_laberinto[x4][y] = 1
@@ -127,9 +138,16 @@ def avanzar():
     global x_actual, y_actual, camino_seguido
     camino_seguido.append((x_actual, y_actual, es_bifurcacion()))
     bifurcaciones.append(es_bifurcacion())
+
     numero_random = random.randint(1, 4)
     flag = True
     while flag:
+        # El avance se hace de forma aleatoria. Se debe cumplir
+        # que sea posible avanzar por la casilla y que el módulo
+        # del número random generado coincida con el del if
+        # si no se cumple ninguna de las dos condiciones se le suma
+        # 1 al numero random para volver a intentarlo
+
         # movimiento a la derecha
         if camino_disponible(0, 1) and (numero_random % 4) == 1:
             x_actual = x_actual
@@ -193,6 +211,14 @@ def es_bifurcacion() -> bool:
         de lo contrario.
 
     """
+    # Notar que una casilla es bifurcación (es decir tiene más de un camino disponible para avanzar)
+    # si la suma de sus casillas adyacentes es menor a dos como se puede ver en el siguiente ejemplo
+    # 101
+    # 100
+    # 101
+    # la casilla que esta justo en el centro (sin contar su casilla padre) tiene dos opciones para
+    # avanzar, y como se puede ver, la suma de las casillas adyacentes a ella es igual a uno
+
     if (x_actual == x_inicial) and (y_actual == y_inicial):
         return True
     return suma_adyacentes(x_actual, y_actual) < 2
@@ -228,6 +254,12 @@ def no_repetir() -> bool:
             visidado con anterioridad, False de lo contario.
 
     """
+
+    # Asumimos que en los laberintos que vamos a solucionar no se puede pasar dos veces
+    # por la misma celda (tal y como ocurre con los que se resuelven en periodicos y revistas)
+    # si por algun motivo se repite una celda, entonces se desapila hasta regresar a la última
+    # bifurcación e intentar ir por el otro camino
+
     global x_actual, y_actual, camino_seguido, bifurcaciones, matriz_laberinto
     aux, aux1, aux3 = camino_seguido.pop()
     if (aux, aux1, aux3) in camino_seguido or (aux, aux1, not aux3) in camino_seguido:
@@ -263,9 +295,24 @@ def add_a_finales():
         y_actual = y_inicial
 
 
-# A PARTIR DE AQUÍ EJECUCIÓN DEL PROGRAMA
-cargar_laberinto()
-for x in range(500000):
-    avanzar()
+def no_hay_solucion():
+    global x_inicial, y_inicial, x_inicial, y_final
+    return (matriz_laberinto[x_inicial - 1][y_inicial] +
+            matriz_laberinto[x_inicial + 1][y_inicial] +
+            matriz_laberinto[x_inicial][y_inicial - 1] +
+            matriz_laberinto[x_inicial][y_inicial + 1]) > 3 or \
+           (matriz_laberinto[x_final - 1][y_final] +
+            matriz_laberinto[x_final + 1][y_final] +
+            matriz_laberinto[x_final][y_final - 1] +
+            matriz_laberinto[x_final][y_final + 1]) > 3
 
-eliminar_caminos_repetidos()
+    # A PARTIR DE AQUÍ EJECUCIÓN DEL PROGRAMA
+
+
+cargar_laberinto()
+if no_hay_solucion():
+    print("no hay solucion")
+else:
+    for x in range(500000):
+        avanzar()
+        eliminar_caminos_repetidos()
