@@ -1,24 +1,5 @@
+
                                ---------------TO DO----------------
-#interacción con usuario
+
 TODO: manual con info del formato de los laberintos, delimitacion del problema
 TODO: añadir interacción con usuario: mostrar y elegir caminos, manual, cargar archivos, elegir inicio y fin
-TODO: devolverse a las bifurcaciones
-TODO: no irse por casillas en las que ya se habia estado
-
-#Sidequest
-TODO: cambiar por nombre significativos
-TODO: optimizar
-
-
-                               ----------------DONE-------------------
-DONE: tapar los caminos ciegos para simplificar
-DONE: método ramdon para avanzar
-DONE: método para guardar el camino seguido actualmente cuando llegue al fin
-DONE: descartar los que tengan más elementos que la cantidad de ceros en el laberinto
-        (porque significa que se quedaron dando vueltas en un ciclo, o se devolvieron)
-DONE: eliminar caminos exitosos repetidos
-
-DONE: de los guardados que van de inicio a fin descartar los que tengan casillas repetidas
-        (porque no se puede pasar dos veces por la misma casilla)
-
-

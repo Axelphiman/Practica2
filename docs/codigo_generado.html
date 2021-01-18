@@ -38,7 +38,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Jerarquia de archivos" href="sistema_archivos.html" />
+    <link rel="next" title="Manual de usuario" href="manual_usuario.html" />
     <link rel="prev" title="Explicación de la solución" href="explicacion_solucion.html" /> 
 </head>
 
@@ -87,10 +87,10 @@
               <p class="caption"><span class="caption-text">Contenido:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="manual_tecnico.html">Manual técnico</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="delimitacion_solucion.html">Delimitación de la solución</a></li>
-<li class="toctree-l2"><a class="reference internal" href="explicacion_solucion.html">Explicación de la solución</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Métodos en detalle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sistema_archivos.html">Jerarquia de archivos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="explicacion_solucion.html">Explicación de la solución</a></li>
+<li class="toctree-l2"><a class="reference internal" href="explicacion_solucion.html#funcionamiento-resumido">Funcionamiento resumido</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Métodos en detalle</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="manual_usuario.html">Manual de usuario</a></li>
@@ -163,33 +163,57 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-main">
-<span id="metodos-en-detalle"></span><h1>Métodos en detalle<a class="headerlink" href="#module-main" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="metodos-en-detalle">
+<h1>Métodos en detalle<a class="headerlink" href="#metodos-en-detalle" title="Permalink to this headline">¶</a></h1>
+<p>En esta página se explica la función de cada método que compone el código, los valores que
+recibe y su tipo de retorno</p>
+<span class="target" id="module-main"></span><dl class="py function">
+<dt id="main.add_a_finales">
+<code class="sig-prename descclassname">main.</code><code class="sig-name descname">add_a_finales</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#add_a_finales"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.add_a_finales" title="Permalink to this definition">¶</a></dt>
+<dd><p>Almacena caminos a la pila de finales</p>
+<dl class="field-list simple">
+<dt class="field-odd">Función</dt>
+<dd class="field-odd"><p>Si un camino logra partir desde el inicio y llegar hasta el final,
+este método lo almacena.</p>
+</dd>
+<dt class="field-even">Modifica</dt>
+<dd class="field-even"><p>caminos_exitosos: le  añade un nuevo camino a la pila.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt id="main.avanzar">
 <code class="sig-prename descclassname">main.</code><code class="sig-name descname">avanzar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#avanzar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.avanzar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Avanza de una casilla a una subsiguiente</p>
-<dl>
-<dt>Función:</dt><dd><p>avanzar aleatoriamente por la matriz actualizando las coordenadas
-y comprobando que casillas estan disponibles para el avance</p>
+<dd><p>Avanza de una casilla a una subsiguiente.</p>
+<dl class="field-list">
+<dt class="field-odd">Función</dt>
+<dd class="field-odd"><p>avanzar por la matriz actualizando las coordenadas actuales
+y comprobando que casillas estan disponibles para el avance.</p>
 </dd>
-<dt>Modifica:</dt><dd><p>x_actual: le resta o suma (1)</p>
-<p>y_actual: le resta o suma (1)</p>
+<dt class="field-even">Modifica</dt>
+<dd class="field-even"><p>x_actual: le resta o suma uno (1).</p>
+<p>y_actual: le resta o suma uno (1).</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="main.camino_disponible">
-<code class="sig-prename descclassname">main.</code><code class="sig-name descname">camino_disponible</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x_parametro</span></em>, <em class="sig-param"><span class="n">y_parametro</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#camino_disponible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.camino_disponible" title="Permalink to this definition">¶</a></dt>
-<dd><p>Controla por cuales casillas adyacentes se puede avanzar</p>
-<dl>
-<dt>Función:</dt><dd><p>servir como método de apoyo para las toma de decisiones en avanzar()</p>
+<code class="sig-prename descclassname">main.</code><code class="sig-name descname">camino_disponible</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x_parametro</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">y_parametro</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/main.html#camino_disponible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.camino_disponible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controla por cuales casillas adyacentes se puede avanzar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Función</dt>
+<dd class="field-odd"><p>servir como método de apoyo para las toma de decisiones en avanzar().</p>
 </dd>
-<dt>Argumentos:</dt><dd><p>x_parametro (int): valor a sumar en la coordenada x</p>
-<p>y_parametro (int): valor a sumar en la cordenada y</p>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x_parametro</strong> (<em>int</em>) – valor a sumar en la coordenada x.</p></li>
+<li><p><strong>y_parametro</strong> (<em>int</em>) – valor a sumar en la cordenada y.</p></li>
+</ul>
 </dd>
-<dt>Retorno:</dt><dd><p>Bool: True si es posible avanzar por esa casilla, False de lo contrario</p>
+<dt class="field-odd">Retorno</dt>
+<dd class="field-odd"><p>Bool: True si es posible avanzar por esa casilla, False de lo contrario.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -197,53 +221,79 @@ y comprobando que casillas estan disponibles para el avance</p>
 <dl class="py function">
 <dt id="main.cargar_laberinto">
 <code class="sig-prename descclassname">main.</code><code class="sig-name descname">cargar_laberinto</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#cargar_laberinto"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.cargar_laberinto" title="Permalink to this definition">¶</a></dt>
-<dd><p>Almacena el laberinto en una matriz</p>
-<dl class="simple">
-<dt>Función:</dt><dd><p>Leer las lineas del archivo seleccionado (ver sección  “Jerarquia
+<dd><p>Almacena el laberinto en una matriz.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Función</dt>
+<dd class="field-odd"><p>Leer las lineas del archivo seleccionado (ver sección  “Jerarquia
 de archivos”) para conformar las filas de la matriz y colummnas de la
-matriz</p>
+matriz.</p>
 </dd>
-<dt>Modifica:</dt><dd><p>matriz_laberinto: le agrega los unos y ceros que conforman el laberinto</p>
+<dt class="field-even">Modifica</dt>
+<dd class="field-even"><p>matriz_laberinto: le agrega los unos y ceros que conforman el laberinto.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt id="main.contar_ceros">
-<code class="sig-prename descclassname">main.</code><code class="sig-name descname">contar_ceros</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#contar_ceros"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.contar_ceros" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cuenta la cantidad de celdas habiles para moverse</p>
-<dl class="simple">
-<dt>Función:</dt><dd><p>evitar bucles infinitos en caminos circulares</p>
+<dt id="main.eliminar_caminos_repetidos">
+<code class="sig-prename descclassname">main.</code><code class="sig-name descname">eliminar_caminos_repetidos</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#eliminar_caminos_repetidos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.eliminar_caminos_repetidos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Elimina soluciones al laberinto duplicadas.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="main.es_bifurcacion">
+<code class="sig-prename descclassname">main.</code><code class="sig-name descname">es_bifurcacion</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/main.html#es_bifurcacion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.es_bifurcacion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compueba si la celda actual es o no un camino una bifurcación del camino.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Función</dt>
+<dd class="field-odd"><p>Servir como método de control para apoyar las
+decisiones tomadas en otros métodos</p>
 </dd>
-<dt>Modifica:</dt><dd><p>cantidad_de_ceros: le da el valor de celdas disponibles para el movimiento</p>
+<dt class="field-even">Retorno</dt>
+<dd class="field-even"><p>Bool: True en caso de que la casilla sea bifurcacion, falso
+de lo contrario.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="main.es_camino_cerrado">
-<code class="sig-prename descclassname">main.</code><code class="sig-name descname">es_camino_cerrado</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x_parametro</span></em>, <em class="sig-param"><span class="n">y_parametro</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#es_camino_cerrado"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.es_camino_cerrado" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compueba si una celda es o no un camino sin salida</p>
-<dl>
-<dt>Función:</dt><dd><p>Servir como método de control para otros métodos</p>
+<code class="sig-prename descclassname">main.</code><code class="sig-name descname">es_camino_cerrado</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x_parametro</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">y_parametro</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/main.html#es_camino_cerrado"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.es_camino_cerrado" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compueba si una celda es o no un camino sin salida.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Función</dt>
+<dd class="field-odd"><p>Servir como método de control para apoyar las
+decisiones tomadas en otros métodos.</p>
 </dd>
-<dt>Argumentos:</dt><dd><p>x_parametro (int): coordenada x de la casilla a verificar</p>
-<p>y_parametro (int): coordenada y de la casilla a verificar</p>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>x_parametro</strong> (<em>int</em>) – coordenada x de la casilla a verificar.</p></li>
+<li><p><strong>y_parametro</strong> (<em>int</em>) – coordenada y de la casilla a verificar.</p></li>
+</ul>
 </dd>
-<dt>Retorno:</dt><dd><p>bool: True en caso de que la casilla sea un camino sin salida, falso
-de lo contrario</p>
+<dt class="field-odd">Retorno</dt>
+<dd class="field-odd"><p>Bool: True en caso de que la casilla sea un camino sin salida, falso
+de lo contrario.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt id="main.peek">
-<code class="sig-prename descclassname">main.</code><code class="sig-name descname">peek</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stack</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#peek"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.peek" title="Permalink to this definition">¶</a></dt>
-<dd><p>Permite visualizar el último elemento añadido a la lista sin eliminarlo</p>
-<dl class="simple">
-<dt>Argumentos:</dt><dd><p>stack: lista[]</p>
+<dt id="main.no_repetir">
+<code class="sig-prename descclassname">main.</code><code class="sig-name descname">no_repetir</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/main.html#no_repetir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.no_repetir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evita que se pase dos veces por encima del mismo camino.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Función</dt>
+<dd class="field-odd"><p>verificar en la pila del camino seguido si ya se
+habia estado anteriormente en esa casilla.</p>
 </dd>
-<dt>Retorno:</dt><dd><p>var: variable dependiente de lo que se almacene en la lista</p>
+<dt class="field-even">Modifica</dt>
+<dd class="field-even"><p>camino_seguido: le añade las coordenadas análizadas
+en caso de que sean totalmente nuevas.</p>
+</dd>
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Bool: True si en las coordenadas ya se había
+visidado con anterioridad, False de lo contario.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -251,28 +301,35 @@ de lo contrario</p>
 <dl class="py function">
 <dt id="main.sellar_camino_cerrado">
 <code class="sig-prename descclassname">main.</code><code class="sig-name descname">sellar_camino_cerrado</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#sellar_camino_cerrado"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.sellar_camino_cerrado" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tapa con unos (1) los caminos cerrados</p>
-<dl>
-<dt>Función:</dt><dd><p>simplificar el laberinto para evitar avanzar por
-caminos sin salida</p>
+<dd><p>Tapa con unos (1) los caminos cerrados.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Función</dt>
+<dd class="field-odd"><p>simplificar el laberinto para evitar avanzar por
+caminos sin salida.</p>
 </dd>
-<dt>Modifica:</dt><dd><p>matriz_laberintos: cambia el valor de las celdas que son camino cerrado</p>
-<p>cantidad_de_ceros: la cantidad de ceros se actualiza, pues se disminuye</p>
+<dt class="field-even">Modifica</dt>
+<dd class="field-even"><p>matriz_laberintos: cambia el valor de las celdas que son parte
+de un camino cerrado.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="main.suma_adyacentes">
-<code class="sig-prename descclassname">main.</code><code class="sig-name descname">suma_adyacentes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x_parametro</span></em>, <em class="sig-param"><span class="n">y_parametro</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#suma_adyacentes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.suma_adyacentes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Suma los valores de las casillas adyacentes</p>
-<p>Función: método auxiliar a otros métodos que requieren
-comprobar el estado de una casilla</p>
-<dl>
-<dt>Argumentos:</dt><dd><p>x_parametro: coordenada x de la casilla a verificar</p>
-<p>y_parametro: coordenada y de la casilla a verificar</p>
+<code class="sig-prename descclassname">main.</code><code class="sig-name descname">suma_adyacentes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x_parametro</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">y_parametro</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="_modules/main.html#suma_adyacentes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.suma_adyacentes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Suma los valores de las casillas adyacentes.</p>
+<p>Función: método auxiliar para el funcionamiento de otros métodos que requieren
+comprobar el estado de una casilla.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_parametro</strong> – coordenada x de la casilla a verificar.</p></li>
+<li><p><strong>y_parametro</strong> – coordenada y de la casilla a verificar.</p></li>
+</ul>
 </dd>
-<dt>Retorno:</dt><dd><p>int: suma del valos de las casilla adyacentes</p>
+</dl>
+<dl class="simple">
+<dt>Retorno:</dt><dd><p>int: suma del valos de las casilla adyacentes.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -285,7 +342,7 @@ comprobar el estado de una casilla</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="sistema_archivos.html" class="btn btn-neutral float-right" title="Jerarquia de archivos" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="manual_usuario.html" class="btn btn-neutral float-right" title="Manual de usuario" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="explicacion_solucion.html" class="btn btn-neutral float-left" title="Explicación de la solución" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
