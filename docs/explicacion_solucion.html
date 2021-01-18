@@ -39,7 +39,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Métodos en detalle" href="codigo_generado.html" />
-    <link rel="prev" title="Jerarquia de archivos" href="sistema_archivos.html" /> 
+    <link rel="prev" title="Delimitación de la solución" href="delimitacion_solucion.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,19 +87,10 @@
               <p class="caption"><span class="caption-text">Contenido:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="manual_tecnico.html">Manual técnico</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="sistema_archivos.html">Jerarquia de archivos</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Explicación de la solución</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#variables">Variables</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#funcionamiento-resumido">Funcionamiento resumido</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#carga-del-laberinto">Carga del laberinto</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#avance">Avance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#finalizacion">Finalización</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#uso-de-pilas">Uso de pilas</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="delimitacion_solucion.html">Delimitación de la solución</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Explicación de la solución</a></li>
 <li class="toctree-l2"><a class="reference internal" href="codigo_generado.html">Métodos en detalle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sistema_archivos.html">Jerarquia de archivos</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="manual_usuario.html">Manual de usuario</a></li>
@@ -174,220 +165,6 @@
             
   <div class="section" id="explicacion-de-la-solucion">
 <h1>Explicación de la solución<a class="headerlink" href="#explicacion-de-la-solucion" title="Permalink to this headline">¶</a></h1>
-<p>El código que soluciona el laberinto se encuentra en Practica2/codigo/main.py .
-Este código lee un archivo .txt que contiene un rectangulo o cuadrado (todas las lineas
-deben tener la misma longitud) formado de ceros (0) y unos (1) como el que se puede observar a continuación:</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p>1111111</p>
-<p>1011111</p>
-<p>1011111</p>
-<p>1011111</p>
-<p>1011111</p>
-<p>1000001</p>
-<p>1111111</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>En donde  los ceros representan que se puede avanzar por esa celda, mientras que los unos
-representan una pared. Es muy importante que el laberinto tenga una “pared externa” es decir,que
-<strong>todos sus bordes esten conformados por unos</strong>, esto con el fin de evitar errores del tipo
-indice por fuera de los limites durante la ejecución.</p>
-<div class="section" id="variables">
-<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
-<p>Las variables usadas en el proyecto son las siguientes:</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 28%" />
-<col style="width: 20%" />
-<col style="width: 52%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Nombre</p></th>
-<th class="head"><p>Tipo</p></th>
-<th class="head"><p>Explicación</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>x_inicial</p></td>
-<td><p>int</p></td>
-<td><p>Coordenada en x desde</p>
-<p>donde se parte</p>
-</td>
-</tr>
-<tr class="row-odd"><td><p>y_inicial</p></td>
-<td><p>int</p></td>
-<td><p>Coordenada  en y desde</p>
-<p>donde se parte</p>
-</td>
-</tr>
-<tr class="row-even"><td><p>x_final</p></td>
-<td><p>int</p></td>
-<td><p>Coordenada en x a donde se</p>
-<p>quiere llegar</p>
-</td>
-</tr>
-<tr class="row-odd"><td><p>y_final</p></td>
-<td><p>int</p></td>
-<td><p>Coordenada en y a donde se</p>
-<p>quiere llegar</p>
-</td>
-</tr>
-<tr class="row-even"><td><p>x_actual</p></td>
-<td><p>int</p></td>
-<td><p>Coordenada x en la cima de la</p>
-<p>pila camino_seguido</p>
-</td>
-</tr>
-<tr class="row-odd"><td><p>y_actual</p></td>
-<td><p>int</p></td>
-<td><p>Coordenada y en la cima de la</p>
-<p>pila camino_seguido</p>
-</td>
-</tr>
-<tr class="row-even"><td><p>filas</p></td>
-<td><p>int</p></td>
-<td><p>Filas que contiene el .txt</p>
-<p>que contiene el laberinto</p>
-</td>
-</tr>
-<tr class="row-odd"><td><p>columnas</p></td>
-<td><p>int</p></td>
-<td><p>Columnas que contiene el .txt</p>
-<p>que contiene el laberinto</p>
-</td>
-</tr>
-<tr class="row-even"><td><p>matriz_laberinto</p></td>
-<td><p>int[][]</p></td>
-<td><p>Laberinto leido convertido</p>
-<p>en una matriz</p>
-</td>
-</tr>
-<tr class="row-odd"><td><p>camino_seguido</p></td>
-<td><p>stack</p></td>
-<td><p>Contiene los pares  x y y de</p>
-<p>coordenadas seguidos para</p>
-<p>Llegar hasta las coordenadas</p>
-<p>actuales</p>
-</td>
-</tr>
-<tr class="row-even"><td><p>caminos_exitosos</p></td>
-<td><p>stack</p></td>
-<td><p>Contiene las pilas de caminos</p>
-<p>que llevan hasta el final</p>
-</td>
-</tr>
-<tr class="row-odd"><td><p>bifurcaciones</p></td>
-<td><p>stack</p></td>
-<td><p>Contiene las coordenadas de</p>
-<p>celdas que son bifurcaciones</p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="section" id="funcionamiento-resumido">
-<h1>Funcionamiento resumido<a class="headerlink" href="#funcionamiento-resumido" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="carga-del-laberinto">
-<h2>Carga del laberinto<a class="headerlink" href="#carga-del-laberinto" title="Permalink to this headline">¶</a></h2>
-<p>El laberinto se carga de el .txt a la matriz_laberinto, por defecto y comodidad el inicio siempre estara en la posición
-(1,1) y el final en la posicion (filas-1, columnas-1)  (hay que tener en cuenta que se empieza a contar desde cero).
-En el siguiente laberinto X representa el inicio y F el final, se puede observar que sus cordenadas son (1,1) y
-(3,3) respectivamente.</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p>1111111</p>
-<p>1X11111</p>
-<p>1011111</p>
-<p>1011111</p>
-<p>1011111</p>
-<p>10000F1</p>
-<p>1111111</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Una vez se ha cargado el laberinto se procede a simplificarlo, esto es eliminar los callejones sin salida, despues de simplificar
-el laberinto de la izquierda quedaria como el que se encuentra al lado derecho</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p>1111111</p>
-<p>1X11111</p>
-<p>1011101</p>
-<p>1000001</p>
-<p>1011111</p>
-<p>1000001</p>
-<p>1111111</p>
-</td>
-<td><p>1111111</p>
-<p>1X11111</p>
-<p>1011111</p>
-<p>1011111</p>
-<p>1011111</p>
-<p>1000001</p>
-<p>1111111</p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="avance">
-<h2>Avance<a class="headerlink" href="#avance" title="Permalink to this headline">¶</a></h2>
-<p>Cada que se va a avanzar de una casilla a otra se realizan varias
-comprobaciones, entre ellas estan:</p>
-<ul class="simple">
-<li><p>Si la casilla esta disponible para el avance, es decir si su valor es 0</p></li>
-<li><p>Si en la casilla ya se habia estado con anterioridad: en caso afirmativo la pila camino_seguido se desapila hasta regresar a la última bifurcacion e intentar avanzar por el otro camino que no se había seguido inicialmente.</p></li>
-<li><p>Si la casilla actual es una bifurcación: en caso afirmativo se almacena en la pila de bifurcaciones.</p></li>
-<li><p>Si la casilla actual es el final: en caso afirmativo se almacena camino_seguido en la pila caminos_exitosos y se borra el contenido de camino_seguido para volver a empezar e intentar hallar otro camino.</p></li>
-</ul>
-</div>
-<div class="section" id="finalizacion">
-<h2>Finalización<a class="headerlink" href="#finalizacion" title="Permalink to this headline">¶</a></h2>
-<p>Después de haberse ejecutado determinado número de veces el programa se detiene, elimina los caminos_exitosos duplicados, los ordena
-y dispone una interfaz para interactuar con el usuario</p>
-</div>
-<div class="section" id="uso-de-pilas">
-<h2>Uso de pilas<a class="headerlink" href="#uso-de-pilas" title="Permalink to this headline">¶</a></h2>
-<p>En python usar pilas es equivalente a usar listas con los siguientes métodos:</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 36%" />
-<col style="width: 64%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>nombre método</p></th>
-<th class="head"><p>implementación en python</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>apilar</p></td>
-<td><p>pila.append()</p></td>
-</tr>
-<tr class="row-odd"><td><p>desapilar</p></td>
-<td><p>pila.pop()</p></td>
-</tr>
-<tr class="row-even"><td><p>cima</p></td>
-<td><p>píla[-1]</p></td>
-</tr>
-<tr class="row-odd"><td><p>esVacia</p></td>
-<td><p>len(pila)==0</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 
 
@@ -397,7 +174,7 @@ y dispone una interfaz para interactuar con el usuario</p>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="codigo_generado.html" class="btn btn-neutral float-right" title="Métodos en detalle" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="sistema_archivos.html" class="btn btn-neutral float-left" title="Jerarquia de archivos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="delimitacion_solucion.html" class="btn btn-neutral float-left" title="Delimitación de la solución" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

@@ -42,5 +42,10 @@ Al ejecutar la aplicación se encontrará con un mensaje de bienvenida, la repre
 
 4. Salir: Al seleccionar esta opción se cerrará la aplicación.
 
+Nota
+^^^^
+
+Las soluciones se muestran como las coordenadas X y Y que siguio el ratón para ir desde el principio del laberinto hasta el final
+
 
 

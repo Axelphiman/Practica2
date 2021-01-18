@@ -38,7 +38,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Manual de usuario" href="manual_usuario.html" />
+    <link rel="next" title="Jerarquia de archivos" href="sistema_archivos.html" />
     <link rel="prev" title="Explicación de la solución" href="explicacion_solucion.html" /> 
 </head>
 
@@ -87,10 +87,10 @@
               <p class="caption"><span class="caption-text">Contenido:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="manual_tecnico.html">Manual técnico</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="sistema_archivos.html">Jerarquia de archivos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delimitacion_solucion.html">Delimitación de la solución</a></li>
 <li class="toctree-l2"><a class="reference internal" href="explicacion_solucion.html">Explicación de la solución</a></li>
-<li class="toctree-l2"><a class="reference internal" href="explicacion_solucion.html#funcionamiento-resumido">Funcionamiento resumido</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Métodos en detalle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sistema_archivos.html">Jerarquia de archivos</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="manual_usuario.html">Manual de usuario</a></li>
@@ -163,18 +163,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="metodos-en-detalle">
-<h1>Métodos en detalle<a class="headerlink" href="#metodos-en-detalle" title="Permalink to this headline">¶</a></h1>
-<p>En esta página se explica la función de cada método que compone el código, los valores que
-recibe y su tipo de retorno</p>
-<span class="target" id="module-main"></span><dl class="py function">
+  <div class="section" id="module-main">
+<span id="metodos-en-detalle"></span><h1>Métodos en detalle<a class="headerlink" href="#module-main" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
 <dt id="main.add_a_finales">
 <code class="sig-prename descclassname">main.</code><code class="sig-name descname">add_a_finales</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#add_a_finales"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.add_a_finales" title="Permalink to this definition">¶</a></dt>
 <dd><p>Almacena caminos a la pila de finales</p>
 <dl class="field-list simple">
 <dt class="field-odd">Función</dt>
-<dd class="field-odd"><p>Si un camino logra partir desde el inicio y llegar hasta el final,
-este método lo almacena.</p>
+<dd class="field-odd"><dl class="simple">
+<dt>Si un camino logra partir desde el inicio y llegar hasta el final,</dt><dd><p>este método lo almacena</p>
+</dd>
+</dl>
 </dd>
 <dt class="field-even">Modifica</dt>
 <dd class="field-even"><p>caminos_exitosos: le  añade un nuevo camino a la pila.</p>
@@ -186,14 +186,14 @@ este método lo almacena.</p>
 <dt id="main.avanzar">
 <code class="sig-prename descclassname">main.</code><code class="sig-name descname">avanzar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#avanzar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.avanzar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Avanza de una casilla a una subsiguiente.</p>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Función</dt>
 <dd class="field-odd"><p>avanzar por la matriz actualizando las coordenadas actuales
 y comprobando que casillas estan disponibles para el avance.</p>
 </dd>
 <dt class="field-even">Modifica</dt>
-<dd class="field-even"><p>x_actual: le resta o suma uno (1).</p>
-<p>y_actual: le resta o suma uno (1).</p>
+<dd class="field-even"><p>x_actual: le resta o suma uno (1).
+y_actual: le resta o suma uno (1).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -308,8 +308,10 @@ visidado con anterioridad, False de lo contario.</p>
 caminos sin salida.</p>
 </dd>
 <dt class="field-even">Modifica</dt>
-<dd class="field-even"><p>matriz_laberintos: cambia el valor de las celdas que son parte
-de un camino cerrado.</p>
+<dd class="field-even"><dl class="simple">
+<dt>matriz_laberintos: cambia el valor de las celdas que son parte</dt><dd><p>de un camino cerrado.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -342,7 +344,7 @@ comprobar el estado de una casilla.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="manual_usuario.html" class="btn btn-neutral float-right" title="Manual de usuario" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sistema_archivos.html" class="btn btn-neutral float-right" title="Jerarquia de archivos" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="explicacion_solucion.html" class="btn btn-neutral float-left" title="Explicación de la solución" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
