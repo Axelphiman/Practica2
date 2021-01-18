@@ -180,7 +180,7 @@
 <span class="sd">        matriz_laberinto: le agrega los unos y ceros que conforman el laberinto.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">matriz_laberinto</span><span class="p">,</span> <span class="n">filas</span><span class="p">,</span> <span class="n">columnas</span>
+    <span class="k">global</span> <span class="n">matriz_laberinto</span><span class="p">,</span> <span class="n">filas</span><span class="p">,</span> <span class="n">columnas</span><span class="p">,</span> <span class="n">x_final</span><span class="p">,</span> <span class="n">y_final</span>
     <span class="n">archivo</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../laberintos/laberinto1.txt&quot;</span><span class="p">)</span>
     <span class="n">archivo_completo</span> <span class="o">=</span> <span class="n">archivo</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
     <span class="n">matriz_laberinto</span> <span class="o">=</span> <span class="p">[]</span>
@@ -196,8 +196,7 @@
     <span class="n">filas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">archivo_completo</span><span class="p">)</span>
     <span class="n">sellar_camino_cerrado</span><span class="p">()</span>
     <span class="n">x_final</span> <span class="o">=</span> <span class="n">filas</span> <span class="o">-</span> <span class="mi">2</span>
-    <span class="n">y_final</span> <span class="o">=</span> <span class="n">columnas</span> <span class="o">-</span> <span class="mi">2</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">x_final</span><span class="p">,</span> <span class="n">y_final</span><span class="p">)</span></div>
+    <span class="n">y_final</span> <span class="o">=</span> <span class="n">columnas</span> <span class="o">-</span> <span class="mi">2</span></div>
 
 
 <div class="viewcode-block" id="es_camino_cerrado"><a class="viewcode-back" href="../codigo_generado.html#main.es_camino_cerrado">[docs]</a><span class="k">def</span> <span class="nf">es_camino_cerrado</span><span class="p">(</span><span class="n">x_parametro</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y_parametro</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -218,7 +217,9 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">matriz_laberinto</span><span class="p">,</span> <span class="n">x_inicial</span><span class="p">,</span> <span class="n">y_inicial</span><span class="p">,</span> <span class="n">x_final</span><span class="p">,</span> <span class="n">y_final</span>
     <span class="c1"># Notar que una celda es un camino sin salida si la suma del valor de</span>
-    <span class="c1"># las celdas adyacentes es mayor o igual a 3</span>
+    <span class="c1"># las celdas adyacentes es mayor o igual a 3, es decir, a excepcion de</span>
+    <span class="c1"># la celda padre de la celda actual, todas las celdas que  adyacentes</span>
+    <span class="c1"># son unos</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">x_parametro</span> <span class="o">==</span> <span class="n">x_inicial</span> <span class="ow">and</span> <span class="n">y_parametro</span> <span class="o">==</span> <span class="n">y_inicial</span><span class="p">)</span> \
             <span class="ow">or</span> <span class="p">(</span><span class="n">x_parametro</span> <span class="o">==</span> <span class="n">x_final</span> <span class="ow">and</span> <span class="n">y_parametro</span> <span class="o">==</span> <span class="n">y_final</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">False</span>
@@ -239,6 +240,15 @@
 <span class="sd">        Retorno:</span>
 <span class="sd">            int: suma del valos de las casilla adyacentes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Gran parte de la funcionalidad del código se basa en saber que en que tipo de celda se</span>
+    <span class="c1"># esta parado. Estos tipos de celda son:</span>
+    <span class="c1">#   celdas normales: celdas que no son caminos cerrados ni bifurcaciones</span>
+    <span class="c1">#   bifurcaciones: celdas que para el próximo movimiento tienen más de una opción</span>
+    <span class="c1">#   camino cerrado: celdas que son callejones sin salida en donde el único camino disponible</span>
+    <span class="c1">#                   es devolverse por donde se vino</span>
+    <span class="c1">#</span>
+    <span class="c1"># Por medio de la suma de las celdas adyacentes es posible saber en que tipo de celda se esta</span>
+
     <span class="k">global</span> <span class="n">matriz_laberinto</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">matriz_laberinto</span><span class="p">[</span><span class="n">x_parametro</span><span class="p">][</span><span class="n">y_parametro</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span>
             <span class="n">matriz_laberinto</span><span class="p">[</span><span class="n">x_parametro</span><span class="p">][</span><span class="n">y_parametro</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span>
@@ -255,14 +265,12 @@
 
 <span class="sd">        :Modifica:</span>
 <span class="sd">            matriz_laberintos: cambia el valor de las celdas que son parte</span>
-<span class="sd">             de un camino cerrado.</span>
+<span class="sd">            de un camino cerrado.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">matriz_laberinto</span><span class="p">,</span> <span class="n">filas</span><span class="p">,</span> <span class="n">columnas</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">filas</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">columnas</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">filas</span> <span class="o">+</span> <span class="n">columnas</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">x4</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">filas</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">filas</span> <span class="o">+</span> <span class="n">columnas</span><span class="p">):</span>  <span class="c1"># Notese que el callejon sin salida más largo que puede llegar a darse</span>
+        <span class="k">for</span> <span class="n">x4</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">filas</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>  <span class="c1"># tendria una longitud de filas+columnas (una &quot;L&quot;)</span>
             <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnas</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">es_camino_cerrado</span><span class="p">(</span><span class="n">x4</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
                     <span class="n">matriz_laberinto</span><span class="p">[</span><span class="n">x4</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span></div>
@@ -277,15 +285,23 @@
 
 <span class="sd">        :Modifica:</span>
 <span class="sd">            x_actual: le resta o suma uno (1).</span>
+
 <span class="sd">            y_actual: le resta o suma uno (1).</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">x_actual</span><span class="p">,</span> <span class="n">y_actual</span><span class="p">,</span> <span class="n">camino_seguido</span>
     <span class="n">camino_seguido</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x_actual</span><span class="p">,</span> <span class="n">y_actual</span><span class="p">,</span> <span class="n">es_bifurcacion</span><span class="p">()))</span>
     <span class="n">bifurcaciones</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">es_bifurcacion</span><span class="p">())</span>
+
     <span class="n">numero_random</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
     <span class="n">flag</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">while</span> <span class="n">flag</span><span class="p">:</span>
+        <span class="c1"># El avance se hace de forma aleatoria. Se debe cumplir</span>
+        <span class="c1"># que sea posible avanzar por la casilla y que el módulo</span>
+        <span class="c1"># del número random generado coincida con el del if</span>
+        <span class="c1"># si no se cumple ninguna de las dos condiciones se le suma</span>
+        <span class="c1"># 1 al numero random para volver a intentarlo</span>
+
         <span class="c1"># movimiento a la derecha</span>
         <span class="k">if</span> <span class="n">camino_disponible</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">numero_random</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">x_actual</span> <span class="o">=</span> <span class="n">x_actual</span>
@@ -349,6 +365,14 @@
 <span class="sd">        de lo contrario.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Notar que una casilla es bifurcación (es decir tiene más de un camino disponible para avanzar)</span>
+    <span class="c1"># si la suma de sus casillas adyacentes es menor a dos como se puede ver en el siguiente ejemplo</span>
+    <span class="c1"># 101</span>
+    <span class="c1"># 100</span>
+    <span class="c1"># 101</span>
+    <span class="c1"># la casilla que esta justo en el centro (sin contar su casilla padre) tiene dos opciones para</span>
+    <span class="c1"># avanzar, y como se puede ver, la suma de las casillas adyacentes a ella es igual a uno</span>
+
     <span class="k">if</span> <span class="p">(</span><span class="n">x_actual</span> <span class="o">==</span> <span class="n">x_inicial</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">y_actual</span> <span class="o">==</span> <span class="n">y_inicial</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
     <span class="k">return</span> <span class="n">suma_adyacentes</span><span class="p">(</span><span class="n">x_actual</span><span class="p">,</span> <span class="n">y_actual</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span></div>
@@ -363,7 +387,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ingrese el número de la que desea ver, ingrese XXX para ver la mejor, ingrese WWWW&quot;</span>
               <span class="o">+</span> <span class="s2">&quot; para verlas todas&quot;</span><span class="p">)</span>
         <span class="n">eleccion</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
-        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">eleccion</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">eleccion</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
             <span class="n">copia</span><span class="o">.</span><span class="n">pop</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">copia</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
 
@@ -384,6 +408,12 @@
 <span class="sd">            visidado con anterioridad, False de lo contario.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Asumimos que en los laberintos que vamos a solucionar no se puede pasar dos veces</span>
+    <span class="c1"># por la misma celda (tal y como ocurre con los que se resuelven en periodicos y revistas)</span>
+    <span class="c1"># si por algun motivo se repite una celda, entonces se desapila hasta regresar a la última</span>
+    <span class="c1"># bifurcación e intentar ir por el otro camino</span>
+
     <span class="k">global</span> <span class="n">x_actual</span><span class="p">,</span> <span class="n">y_actual</span><span class="p">,</span> <span class="n">camino_seguido</span><span class="p">,</span> <span class="n">bifurcaciones</span><span class="p">,</span> <span class="n">matriz_laberinto</span>
     <span class="n">aux</span><span class="p">,</span> <span class="n">aux1</span><span class="p">,</span> <span class="n">aux3</span> <span class="o">=</span> <span class="n">camino_seguido</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">aux</span><span class="p">,</span> <span class="n">aux1</span><span class="p">,</span> <span class="n">aux3</span><span class="p">)</span> <span class="ow">in</span> <span class="n">camino_seguido</span> <span class="ow">or</span> <span class="p">(</span><span class="n">aux</span><span class="p">,</span> <span class="n">aux1</span><span class="p">,</span> <span class="ow">not</span> <span class="n">aux3</span><span class="p">)</span> <span class="ow">in</span> <span class="n">camino_seguido</span><span class="p">:</span>
@@ -403,7 +433,7 @@
 
 <span class="sd">        :Función:</span>
 <span class="sd">            Si un camino logra partir desde el inicio y llegar hasta el final,</span>
-<span class="sd">             este método lo almacena</span>
+<span class="sd">            este método lo almacena.</span>
 
 <span class="sd">        :Modifica:</span>
 <span class="sd">            caminos_exitosos: le  añade un nuevo camino a la pila.</span>
@@ -419,14 +449,27 @@
         <span class="n">y_actual</span> <span class="o">=</span> <span class="n">y_inicial</span></div>
 
 
-<span class="c1"># A PARTIR DE AQUÍ EJECUCIÓN DEL PROGRAMA</span>
-<span class="n">cargar_laberinto</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">500000</span><span class="p">):</span>
-    <span class="n">avanzar</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">no_hay_solucion</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">x_inicial</span><span class="p">,</span> <span class="n">y_inicial</span><span class="p">,</span> <span class="n">x_inicial</span><span class="p">,</span> <span class="n">y_final</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">matriz_laberinto</span><span class="p">[</span><span class="n">x_inicial</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">y_inicial</span><span class="p">]</span> <span class="o">+</span>
+            <span class="n">matriz_laberinto</span><span class="p">[</span><span class="n">x_inicial</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">y_inicial</span><span class="p">]</span> <span class="o">+</span>
+            <span class="n">matriz_laberinto</span><span class="p">[</span><span class="n">x_inicial</span><span class="p">][</span><span class="n">y_inicial</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span>
+            <span class="n">matriz_laberinto</span><span class="p">[</span><span class="n">x_inicial</span><span class="p">][</span><span class="n">y_inicial</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="ow">or</span> \
+           <span class="p">(</span><span class="n">matriz_laberinto</span><span class="p">[</span><span class="n">x_final</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">y_final</span><span class="p">]</span> <span class="o">+</span>
+            <span class="n">matriz_laberinto</span><span class="p">[</span><span class="n">x_final</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">y_final</span><span class="p">]</span> <span class="o">+</span>
+            <span class="n">matriz_laberinto</span><span class="p">[</span><span class="n">x_final</span><span class="p">][</span><span class="n">y_final</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span>
+            <span class="n">matriz_laberinto</span><span class="p">[</span><span class="n">x_final</span><span class="p">][</span><span class="n">y_final</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">3</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">caminos_exitosos</span><span class="p">))</span>
-<span class="n">eliminar_caminos_repetidos</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">caminos_exitosos</span><span class="p">))</span>
+    <span class="c1"># A PARTIR DE AQUÍ EJECUCIÓN DEL PROGRAMA</span>
+
+
+<span class="n">cargar_laberinto</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">no_hay_solucion</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no hay solucion&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">500000</span><span class="p">):</span>
+        <span class="n">avanzar</span><span class="p">()</span>
+        <span class="n">eliminar_caminos_repetidos</span><span class="p">()</span>
 </pre></div>
 
            </div>

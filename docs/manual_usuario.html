@@ -38,7 +38,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Jerarquia de archivos" href="sistema_archivos.html" /> 
+    <link rel="prev" title="Métodos en detalle" href="codigo_generado.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -86,7 +86,14 @@
               <p class="caption"><span class="caption-text">Contenido:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="manual_tecnico.html">Manual técnico</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Manual de usuario</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Manual de usuario</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#formato-laberintos">Formato laberintos:</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#menu-del-juego">Menú del juego:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nota">Nota</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -156,6 +163,46 @@
             
   <div class="section" id="manual-de-usuario">
 <h1>Manual de usuario<a class="headerlink" href="#manual-de-usuario" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="formato-laberintos">
+<h2>Formato laberintos:<a class="headerlink" href="#formato-laberintos" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>111111111111</p>
+<p>101111111111</p>
+<p>101110000011</p>
+<p>101110111011</p>
+<p>100000111011</p>
+<p>111111111001</p>
+<p>111111111111</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Los laberintos son cargados por medio de un archivo texto y tienen el siguiente formato:
+* El archivo debe de contener los caracteres ‘0’ y ‘1’ y ningún otro más, estos representan caminos y paredes respectivamente.
+* No hay espacios entre los caracteres.
+* La totalidad de los caracteres deben de formar un rectángulo de tamaño m*n.
+* La posición inicial se encontrará en las coordenadas (2,2) y la final en (m – 1, n – 1).
+* La totalidad del borde del rectángulo está conformado por ‘1’s.</p>
+<p>Además, el archivo texto conteniendo el laberinto deberá almacenarse en la carpeta laberintos/ con el nombre laberinto1.txt</p>
+<div class="section" id="menu-del-juego">
+<h3>Menú del juego:<a class="headerlink" href="#menu-del-juego" title="Permalink to this headline">¶</a></h3>
+<p>Al ejecutar la aplicación se encontrará con un mensaje de bienvenida, la representación del laberinto y el siguiente menú de opciones:</p>
+<ol class="arabic simple">
+<li><p>Mostrar número de soluciones: Al seleccionar esta opción, se mostrará en pantalla la1 cantidad de soluciones que tiene el laberinto ingresado.</p></li>
+<li><p>Mostrar todas las soluciones: Al seleccionar esta opción se mostrará en pantalla una serie de listas cada una representando una solución, estas listas además estarán ordenadas por tamaño, es decir, por el número de pasos realizados dentro del laberinto.</p></li>
+<li><p>Mostrar n-ésima solución: Al seleccionar esta opción, deberá ingresar el número de la solución que quiera ver (recuerde que las soluciones están ordenadas por tamaño) si se ingresa un número mayor a la cantidad de soluciones, la aplicación mostrará un mensaje de error y podrá volver a intentarlo.</p></li>
+<li><p>Salir: Al seleccionar esta opción se cerrará la aplicación.</p></li>
+</ol>
+</div>
+<div class="section" id="nota">
+<h3>Nota<a class="headerlink" href="#nota" title="Permalink to this headline">¶</a></h3>
+<p>Las soluciones se muestran como las coordenadas X y Y que siguio el ratón para ir desde el principio del laberinto hasta el final</p>
+</div>
+</div>
 </div>
 
 
@@ -164,7 +211,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="sistema_archivos.html" class="btn btn-neutral float-left" title="Jerarquia de archivos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="codigo_generado.html" class="btn btn-neutral float-left" title="Métodos en detalle" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
